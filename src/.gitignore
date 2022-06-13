@@ -4,8 +4,6 @@
 *.so
 
 #cmake
-/lib/
-/data/
 /cmbuild/
 /build32/
 /build64/
