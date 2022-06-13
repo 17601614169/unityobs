@@ -1,0 +1,166 @@
+uniform float4x4 ViewProj;
+uniform texture2d image;
+uniform float eye_strongly;
+uniform float face_strongly;
+uniform float thin_strongly;
+uniform float gl_lefteyeX;
+uniform float gl_lefteyeY;
+uniform float gl_righteyeX;
+uniform float gl_righteyeY;
+uniform float gl_point0X;
+uniform float gl_point0Y;
+uniform float gl_point51X;
+uniform float gl_point51Y;
+uniform float gl_point32X;
+uniform float gl_point32Y;
+uniform float gl_point4X;
+uniform float gl_point4Y;
+uniform float gl_point28X;
+uniform float gl_point28Y;
+uniform float gl_point54X;
+uniform float gl_point54Y;
+uniform float gl_point10X;
+uniform float gl_point10Y;
+uniform float gl_point22X;
+uniform float gl_point22Y;
+uniform float gl_point57X;
+uniform float gl_point57Y;
+uniform float gl_point12X;
+uniform float gl_point12Y;
+uniform float gl_point20X;
+uniform float gl_point20Y;
+uniform float gl_point16X;
+uniform float gl_point16Y;
+uniform float gl_point85X;
+uniform float gl_point85Y;
+uniform float gl_width;
+uniform float gl_height;
+sampler_state def_sampler {
+	Filter   = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+struct VertInOut {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+};
+VertInOut VSDefault(VertInOut vert_in)
+{
+	VertInOut vert_out;
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv  = vert_in.uv;
+	return vert_out;
+}
+float2 enlargeEye(float2 currentCoordinate, float2 circleCenter, float radius, float intensity)
+{
+    float currentDistance = distance(currentCoordinate, circleCenter);
+    float weight = currentDistance / radius;
+    weight = 1.0 - intensity * (1.0 - weight * weight);
+    weight = clamp(weight, 0.0, 1.0);
+    currentCoordinate = circleCenter + (currentCoordinate - circleCenter) * weight;
+    return currentCoordinate;
+}
+float2 face_slender_1(float2 prePoint,float2 curPoint, float2 texCoord, float radius,float u_reshapeRatio)
+{
+    float2 pos = texCoord;
+
+    float2 newSrc = prePoint ;
+    float2 newDst = curPoint ;
+    float2 newTex = texCoord ;
+    float newRadius = radius;
+    float r = distance(newSrc, newTex);
+
+    if (r < newRadius)
+    {
+        float alpha = 1.0 -  r / newRadius;
+        float2 displacementVec = (newDst - newSrc) * pow(alpha, 1.0)  * u_reshapeRatio;
+        pos = (newTex - displacementVec);
+
+    }
+    return pos;
+}
+float2 faceslender (float2 texCoord, float radius, float reshapeIntensity)
+{
+    float2 coordinate=texCoord;
+    coordinate=face_slender_1(float2(gl_point0X,gl_point0Y),float2(gl_point51X,gl_point51Y),coordinate,radius,reshapeIntensity*0.1);
+    coordinate=face_slender_1(float2(gl_point32X,gl_point32Y),float2(gl_point51X,gl_point51Y),coordinate,radius,reshapeIntensity*0.1);
+
+    coordinate=face_slender_1(float2(gl_point4X,gl_point4Y),float2(gl_point54X,gl_point54Y),coordinate,radius,reshapeIntensity*0.15);
+    coordinate=face_slender_1(float2(gl_point28X,gl_point28Y),float2(gl_point54X,gl_point54Y),coordinate,radius,reshapeIntensity*0.15);
+
+    coordinate=face_slender_1(float2(gl_point10X,gl_point10Y),float2(gl_point57X,gl_point57Y),coordinate,radius,reshapeIntensity*0.15);
+    coordinate=face_slender_1(float2(gl_point22X,gl_point22Y),float2(gl_point57X,gl_point57Y),coordinate,radius,reshapeIntensity*0.15);
+    return coordinate;
+}
+float2 curveWarp(float2 textureCoord, float2 originPosition, float2 targetPosition, float radius)
+{
+    float2 offset = float2(0.0,0.0);
+    float2 result = float2(0.0,0.0);
+    float2 direction = targetPosition - originPosition;
+    float infect = distance(textureCoord, originPosition)/radius;
+    infect = 1.0 - infect;
+    infect = clamp(infect, 0.0, 1.0);
+    offset = direction * infect;
+    result = textureCoord - offset;
+    return result;
+}
+float2 faceShave(float2 currentCoordinate, float faceLength,float strongly)
+{
+    float2 coordinate = currentCoordinate;
+    float2 currentPoint = float2(0.0,0.0);
+    float2 destPoint = float2(0.0,0.0);
+
+    float faceShaveScale = strongly * 0.12;
+    float radius = faceLength * 1.0;
+
+    float2 chinCenter = (float2(gl_point16X,gl_point16Y) + float2(gl_point85X,gl_point85Y)) * 0.5;
+    currentPoint = float2(gl_point12X,gl_point12Y);
+    destPoint = currentPoint + (chinCenter - currentPoint) * faceShaveScale;
+    coordinate = curveWarp(coordinate, currentPoint, destPoint, radius);
+
+    currentPoint = float2(gl_point20X,gl_point20Y);
+    destPoint = currentPoint + (chinCenter - currentPoint) * faceShaveScale;
+    coordinate = curveWarp(coordinate, currentPoint, destPoint, radius);
+
+    return coordinate;
+}
+
+
+float4 PSDrawBare(VertInOut vert_in) : TARGET
+{
+	
+
+    float2 coordinate1 = vert_in.uv * float2(gl_width,gl_height);
+	if(gl_lefteyeX == 0 || gl_lefteyeY==0 || gl_righteyeX ==0 || gl_righteyeY == 0){
+		float4 colora = image.Sample(def_sampler,vert_in.uv);
+	    return colora;
+    }else{
+		
+		// 两个瞳孔的距离
+		float eyeDistance = distance(float2(gl_lefteyeX,gl_lefteyeY), float2(gl_righteyeX,gl_righteyeY));
+		//瘦脸
+		coordinate1 = faceslender(coordinate1, eyeDistance,face_strongly); 
+		float eyeEnlarge =  eye_strongly * 0.2 ; // 放大倍数
+		if (eyeEnlarge > 0.0) {
+			float radius = eyeDistance * 0.33; // 眼睛放大半径
+			//大眼
+			coordinate1 = enlargeEye(coordinate1, float2(gl_lefteyeX,gl_lefteyeY) + (float2(gl_righteyeX,gl_righteyeY) - float2(gl_lefteyeX,gl_lefteyeY)) * 0.05, radius, eyeEnlarge);
+			coordinate1 = enlargeEye(coordinate1, float2(gl_righteyeX,gl_righteyeY) + (float2(gl_lefteyeX,gl_lefteyeY) - float2(gl_righteyeX,gl_righteyeY)) * 0.05, radius, eyeEnlarge);
+		}
+		//瘦下巴
+		coordinate1 = faceShave(coordinate1, eyeDistance,thin_strongly);
+		coordinate1 = coordinate1 / float2(gl_width,gl_height);
+		// 输出图像
+		float4 colora = image.Sample(def_sampler,coordinate1);
+
+		return colora;
+	}
+}
+technique Draw
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSDrawBare(vert_in);
+	}
+}

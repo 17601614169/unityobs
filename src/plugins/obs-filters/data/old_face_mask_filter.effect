@@ -1,0 +1,278 @@
+uniform float4x4 ViewProj;
+uniform texture2d image;
+// uniform float4 sfxz;
+uniform float4x4 rmat;
+uniform float4x4 pp;
+uniform float3 u_p0;
+uniform float3 u_p1;
+uniform float3 u_p2;
+uniform float3 u_p3;
+
+uniform float4x4 pp1;
+uniform float3 u1_p0;
+uniform float3 u1_p1;
+uniform float3 u1_p2;
+uniform float3 u1_p3;
+// uniform float xcenter;
+uniform float2 ErDuo_center_left;
+
+uniform float2 HuZi_center_left;
+
+uniform float2 ErDuo_sticker_left;
+
+uniform float2 HuZi_sticker_left;
+
+
+uniform float is_sticker;
+uniform float s_width;
+uniform float s_height;
+
+
+uniform texture2d target_ErDuo_left;
+
+uniform texture2d target_HuZi_left;
+
+
+sampler_state def_sampler {
+	Filter   = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+struct VertInOut {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+	float2 uv2 : TEXCOORD1;
+
+};
+float cross2D(float2 v, float2 w)
+{
+	return v.x * w.y - v.y * w.x;
+}
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+	VertInOut vert_out;
+
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv = vert_in.uv;
+	//vert_out.uv2 = vert_in.uv;
+
+	return vert_out;
+}
+	
+VertInOut VSstickerhuzileft(VertInOut vert_in)
+{
+	VertInOut vert_out;
+	vert_out.uv2.x=vert_in.pos.x;
+	vert_out.uv2.y=vert_in.pos.y;
+
+	// vert_in.pos.x = vert_in.pos.x - s_width/2;
+	// vert_in.pos.y = vert_in.pos.y - s_height/2;
+	// vert_in.pos.x = vert_in.pos.x / s_width * HuZi_sticker_left.x;
+	// vert_in.pos.y = vert_in.pos.y / s_height * HuZi_sticker_left.y;
+	// vert_in.pos.z=0;
+	// vert_in.pos.w=1;
+	// vert_in.pos = mul(vert_in.pos.xyzw, rmat);
+	// //vert_in.pos.xyzw=vert_in.pos.xyzw/vert_in.pos.w;
+	
+	// float f=s_width/4;
+	
+	// vert_in.pos.y=vert_in.pos.y*f/(f-vert_in.pos.z);
+	// vert_in.pos.x=vert_in.pos.x*f/(f-vert_in.pos.z);
+		
+	// //vert_in.pos.x = max(-xcenter,min(xcenter,vert_in.pos.x)) + xcenter;
+	// //vert_in.pos.y = max(-ycenter,min(ycenter,vert_in.pos.y)) + ycenter;
+	
+	// vert_in.pos.x = vert_in.pos.x +300;// HuZi_center_left.x;
+	// vert_in.pos.y = vert_in.pos.y +300;// HuZi_center_left.y;
+	// vert_in.pos.z=0;
+	// vert_in.pos.w=1;
+	vert_out.pos = mul(float4(vert_in.pos.xyz,1), ViewProj);
+	vert_out.uv = vert_in.uv;
+	//vert_out.uv2 = vert_in.uv;
+
+	return vert_out;
+}
+
+
+VertInOut VSstickererduoleft(VertInOut vert_in)
+{
+
+	VertInOut vert_out;
+	// vert_in.pos.x = vert_in.pos.x - s_width/2;
+	// vert_in.pos.y = vert_in.pos.y - s_height/2;
+	// vert_in.pos.x = vert_in.pos.x / s_width * ErDuo_sticker_left.x;
+	// vert_in.pos.y = vert_in.pos.y / s_height * ErDuo_sticker_left.y;
+	// vert_in.pos.z=0;
+	// vert_in.pos.w=1;
+	// vert_in.pos = mul(vert_in.pos.xyzw, rmat);
+	// vert_in.pos.xyzw=vert_in.pos.xyzw/vert_in.pos.w;
+	
+	// float f=s_width/4;
+	
+	// vert_in.pos.y=vert_in.pos.y*f/(f-vert_in.pos.z);
+	// vert_in.pos.x=vert_in.pos.x*f/(f-vert_in.pos.z);
+
+	//vert_in.pos.x = max(-xcenter,min(xcenter,vert_in.pos.x)) + xcenter;
+	//vert_in.pos.y = max(-ycenter,min(ycenter,vert_in.pos.y)) + ycenter;
+	
+	// vert_in.pos.x = vert_in.pos.x + ErDuo_center_left.x;
+	// vert_in.pos.y = vert_in.pos.y + ErDuo_center_left.y;
+	// vert_in.pos.z=0;
+	// vert_in.pos.w=1;
+	vert_out.pos = mul(float4(vert_in.pos.xyz,1), ViewProj);
+	// vert_out.pos.z=0;
+	// vert_out.pos.w=1;
+	vert_out.uv = vert_in.uv;
+	//vert_out.uv2 = vert_in.uv;
+
+	return vert_out;
+}
+
+
+
+float4 PSDrawBare(VertInOut vert_in) : TARGET
+{
+
+	float4 rgba = image.Sample(def_sampler, vert_in.uv);
+	return rgba;
+}
+
+float4 PSDrawBaretzhuzileft(VertInOut vert_in) : TARGET
+{
+VertInOut vert_out;
+	
+	vert_out.pos = float4(vert_in.pos.xyz, 1.0);
+
+	float2 v_q;
+	float2 v_b1;
+	float2 v_b2;
+	float2 v_b3;
+
+	
+	float4 u4_p0= float4(u_p0, 1.0);
+	float4 u4_p1= float4(u_p1, 1.0);
+	float4 u4_p2= float4(u_p2, 1.0);
+	float4 u4_p3= float4(u_p3, 1.0);
+	
+	v_q = (vert_out.pos - u4_p0).xy;
+	v_b1 = (u4_p1 - u4_p0).xy;
+	v_b2 = (u4_p2 - u4_p0).xy;
+	v_b3 = (u4_p0 - u4_p1 - u4_p2 + u4_p3).xy;
+
+	float A = cross2D(v_b2, v_b3);
+	float B = cross2D(v_b3, v_q) - cross2D(v_b1, v_b2);
+	float C = cross2D(v_b1, v_q);
+	//float discrim = 1;
+	// Solve for v
+	float2 uv;
+	if (abs(A) < 0.001)
+	{
+	
+		// Linear form
+		uv.y = -C / B;
+	}
+	else
+	{
+	
+		// Quadratic form. Take positive root for CCW winding with V-up
+		float discrim = B * B - 4 * A * C;
+		//uv.y = 0.5 * (-B - sqrt(discrim)) / A;//CCW
+		uv.y = 0.5 * (-B + sqrt(discrim)) / A; //CW
+	}
+	// Solve for u, using largest-magnitude component
+	float2 denom = v_b1 + uv.y * v_b3;
+	if (abs(denom.x) > abs(denom.y))
+		uv.x = (v_q.x - v_b2.x * uv.y) / denom.x;
+	else
+		uv.x = (v_q.y - v_b2.y * uv.y) / denom.y;
+	float4 rgba = target_HuZi_left.Sample(def_sampler, uv);
+
+	return rgba;
+}
+
+
+float4 PSDrawBaretzerduoleft(VertInOut vert_in) : TARGET
+{
+	VertInOut vert_out;
+	
+	vert_out.pos = float4(vert_in.pos.xyz, 1.0);
+
+	float2 v_q;
+	float2 v_b1;
+	float2 v_b2;
+	float2 v_b3;
+
+	
+	float4 u4_p0= float4(u1_p0, 1.0);
+	float4 u4_p1= float4(u1_p1, 1.0);
+	float4 u4_p2= float4(u1_p2, 1.0);
+	float4 u4_p3= float4(u1_p3, 1.0);
+	
+	v_q = (vert_out.pos - u4_p0).xy;
+	v_b1 = (u4_p1 - u4_p0).xy;
+	v_b2 = (u4_p2 - u4_p0).xy;
+	v_b3 = (u4_p0 - u4_p1 - u4_p2 + u4_p3).xy;
+
+	float A = cross2D(v_b2, v_b3);
+	float B = cross2D(v_b3, v_q) - cross2D(v_b1, v_b2);
+	float C = cross2D(v_b1, v_q);
+	//float discrim = 1;
+	// Solve for v
+	float2 uv;
+	if (abs(A) < 0.001)
+	{
+	
+		// Linear form
+		uv.y = -C / B;
+	}
+	else
+	{
+	
+		// Quadratic form. Take positive root for CCW winding with V-up
+		float discrim = B * B - 4 * A * C;
+		//uv.y = 0.5 * (-B - sqrt(discrim)) / A;//CCW
+		uv.y = 0.5 * (-B + sqrt(discrim)) / A; //CW
+	}
+	// Solve for u, using largest-magnitude component
+	float2 denom = v_b1 + uv.y * v_b3;
+	if (abs(denom.x) > abs(denom.y))
+		uv.x = (v_q.x - v_b2.x * uv.y) / denom.x;
+	else
+		uv.x = (v_q.y - v_b2.y * uv.y) / denom.y;
+
+	float4 rgba = target_ErDuo_left.Sample(def_sampler, uv);
+
+	return rgba;
+}
+
+
+
+technique Draw
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSDrawBare(vert_in);
+	}
+}
+technique Draw1
+{
+	pass
+	{
+		// vertex_shader = VSDefault(vert_in);
+		// pixel_shader  = PSDrawBare(vert_in);
+		vertex_shader = VSstickerhuzileft(vert_in);
+		pixel_shader = PSDrawBaretzhuzileft(vert_in);
+	}
+	
+}
+technique Draw2
+{
+	pass{
+		vertex_shader = VSstickerhuzileft(vert_in);
+		pixel_shader = PSDrawBaretzerduoleft(vert_in);
+
+	}
+}

@@ -1,0 +1,96 @@
+uniform float4x4 ViewProj;
+uniform texture2d image;
+// uniform texture2d tzimage;
+uniform float sfxz;
+uniform float smatrix00;
+uniform float smatrix01;
+uniform float smatrix02;
+uniform float smatrix03;
+uniform float smatrix10;
+uniform float smatrix11;
+uniform float smatrix12;
+uniform float smatrix13;
+uniform float smatrix20;
+uniform float smatrix21;
+uniform float smatrix22;
+uniform float smatrix23;
+uniform float smatrix30;
+uniform float smatrix31;
+uniform float smatrix32;
+uniform float smatrix33;
+uniform float xcenter;
+uniform float ycenter;
+uniform float is_sticker;
+uniform float stickerw;
+uniform float stickerh;
+uniform float s_width;
+uniform float s_height;
+uniform texture2d target;
+
+sampler_state def_sampler {
+	Filter   = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+struct VertInOut {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+	float2 uv2 : TEXCOORD1;
+};
+
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+	VertInOut vert_out;
+
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv = vert_in.uv;
+	vert_out.uv2 = vert_in.uv;
+
+	return vert_out;
+}
+	
+VertInOut VSsticker(VertInOut vert_in)
+{
+	VertInOut vert_out;
+
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv = vert_in.uv;
+	vert_out.uv2 = vert_in.uv;
+
+
+	return vert_out;
+}
+
+float4 PSDrawBare(VertInOut vert_in) : TARGET
+{
+
+	// ViewProj[0][0] = float(smatrix01);
+	float4 rgba = image.Sample(def_sampler, vert_in.uv);
+	// ViewProj[3][1] = smatrix01;
+	//float4 targetRGB = target.Sample(def_sampler, float2(0.2,0.2));
+	//rgba.rgb = saturate(rgba.rgb + targetRGB.rgb);
+	// return float4(rgba.r,rgba.g,rgba.b,ViewProj[3][1]+1);
+	return rgba;
+}
+
+float4 PSDrawBaretz(VertInOut vert_in) : TARGET
+{
+	float4 rgba = target.Sample(def_sampler, vert_in.uv);
+	return rgba;
+}
+
+technique Draw
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSDrawBare(vert_in);
+	}
+	pass
+	{
+		vertex_shader = VSsticker(vert_in);
+		pixel_shader  = PSDrawBaretz(vert_in);
+	}
+}

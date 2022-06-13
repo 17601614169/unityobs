@@ -1,0 +1,18 @@
+{
+	"config": {
+		"name": "up to you",
+		"image_extension": "png",
+		"image_first_index": 0,
+		"image_end_index": 14,
+		"point_first": {
+			"x": 18,
+			"y": 19
+		},
+		"point_second": {
+			"x": 20,
+			"y": 21
+		},
+		"width_coefficient": 1.5,
+		"height_coefficient": 0.5
+	}
+}

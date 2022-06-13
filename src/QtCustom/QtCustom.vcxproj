@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7A22ED48-7D32-4D37-83EF-223974A994E3}</ProjectGuid>
+    <Keyword>QtVS_v303</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+    <OutDir>$(SolutionDir)UI\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <OutDir>$(SolutionDir)UI\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PostBuildEvent>
+      <Command>Attrib $(SolutionDir)UI\$(Configuration)\$(ProjectName).dll -r
+Copy $(SolutionDir)UI\$(Configuration)\$(ProjectName).dll  $(SolutionDir)rundir\$(Configuration)\bin\32bit\$(ProjectName).dll
+Attrib $(SolutionDir)UI\$(Configuration)\$(ProjectName).pdb -r
+Copy $(SolutionDir)UI\$(Configuration)\$(ProjectName).pdb  $(SolutionDir)rundir\$(Configuration)\bin\32bit\$(ProjectName).pdb
+$(QTDIR)/bin/lrelease qtcustom_zh.ts -qm $(ProjectDir)qtcustom_zh.qm
+Attrib $(ProjectDir)qtcustom_zh.qm -r
+Copy $(ProjectDir)qtcustom_zh.qm $(SolutionDir)rundir\$(Configuration)\bin\32bit\qtcustom_zh.qm
+</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\libobs;$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>..\build\libobs\Debug\obs.lib;$(SolutionDir)..\lib\Debug\lib_jsond.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PostBuildEvent>
+      <Command>Attrib $(SolutionDir)UI\$(Configuration)\$(ProjectName).dll -r
+Copy $(SolutionDir)UI\$(Configuration)\$(ProjectName).dll  $(SolutionDir)rundir\$(Configuration)\bin\32bit\$(ProjectName).dll
+$(QTDIR)/bin/lrelease qtcustom_zh.ts -qm $(ProjectDir)qtcustom_zh.qm
+Attrib $(ProjectDir)qtcustom_zh.qm -r
+Copy $(ProjectDir)qtcustom_zh.qm $(SolutionDir)rundir\$(Configuration)\bin\32bit\qtcustom_zh.qm</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\libobs;.\;$(Qt_INCLUDEPATH_);$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)libobs\$(Configuration)\obs.lib;$(Qt_LIBS_);$(SolutionDir)..\lib\Release\lib_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
+    <QtInstall>Qt5.12.3</QtInstall>
+    <QtModules>core;gui;network;webchannel;webengine;webenginewidgets;widgets</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="QtSettings">
+    <QtInstall>Qt5.12.3</QtInstall>
+    <QtModules>core;gui;network;webchannel;webengine;webenginewidgets;widgets</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UsePrecompiledHeader>Use</UsePrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>QTCUSTOM_LIB;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UsePrecompiledHeader>Use</UsePrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>QTCUSTOM_LIB;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="alter-password.cpp" />
+    <ClCompile Include="asyn-request.cpp" />
+    <ClCompile Include="base-web-widget.cpp" />
+    <ClCompile Include="base-widget.cpp" />
+    <ClCompile Include="bottom-ctrls.cpp" />
+    <ClCompile Include="callback-request.cpp" />
+    <ClCompile Include="characters-convert.cpp" />
+    <ClCompile Include="common-function.cpp" />
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="custom-config-ini.cpp" />
+    <ClCompile Include="customer-service-base-dialog.cpp" />
+    <ClCompile Include="font-set.cpp" />
+    <ClCompile Include="im-widget.cpp" />
+    <ClCompile Include="json-parser.cpp" />
+    <ClCompile Include="left-right-button.cpp" />
+    <ClCompile Include="left-widget.cpp" />
+    <ClCompile Include="custom-slider.cpp" />
+    <ClCompile Include="live-partner.cpp" />
+    <ClCompile Include="live_statics.cpp" />
+    <ClCompile Include="login-dialog.cpp" />
+    <ClCompile Include="mask-label.cpp" />
+    <ClCompile Include="md5.cpp" />
+    <ClCompile Include="move-dialog.cpp" />
+    <ClCompile Include="msgbox.cpp" />
+    <ClCompile Include="msg-item.cpp" />
+    <ClCompile Include="named-btn.cpp" />
+    <ClCompile Include="network\base-request.cpp" />
+    <ClCompile Include="network\download-request.cpp" />
+    <ClCompile Include="network\network-utility.cpp" />
+    <ClCompile Include="picture-dialog.cpp" />
+    <ClCompile Include="qtcustom-export.cpp" />
+    <ClCompile Include="record-save-tip.cpp" />
+    <ClCompile Include="sacrouge-dialog.cpp" />
+    <ClCompile Include="set-dialog.cpp" />
+    <ClCompile Include="signal-proxy_model.cpp" />
+    <ClCompile Include="source-base-dialog.cpp" />
+    <ClCompile Include="source-widget.cpp" />
+    <ClCompile Include="string-convert.cpp" />
+    <ClCompile Include="tab-item.cpp" />
+    <ClCompile Include="translucent-widget.h.cpp" />
+    <ClCompile Include="top-widget.cpp" />
+    <ClCompile Include="url-label.cpp" />
+    <ClCompile Include="url-tab-widget.cpp" />
+    <ClCompile Include="user-info.cpp" />
+    <ClCompile Include="webengine-widget.cpp" />
+    <QtMoc Include="webengine-widget.h" />
+    <QtMoc Include="tab-item.h" />
+    <QtMoc Include="url-tab-widget.h" />
+    <QtMoc Include="url-label.h" />
+    <QtMoc Include="user-info.h" />
+    <QtMoc Include="string-convert.h" />
+    <QtMoc Include="top-widget.h" />
+    <CustomBuild Include="qtcustom_global.h" />
+    <QtMoc Include="QtCustom.h" />
+    <ClCompile Include="QtCustom.cpp" />
+    <QtMoc Include="bottom-ctrls.h" />
+    <QtMoc Include="left-widget.h" />
+    <QtMoc Include="asyn-request.h" />
+    <QtMoc Include="callback-request.h" />
+    <QtMoc Include="base-widget.h" />
+    <QtMoc Include="alter-password.h" />
+    <QtMoc Include="base-web-widget.h" />
+    <ClInclude Include="characters-convert.h" />
+    <ClInclude Include="common-function.h" />
+    <ClInclude Include="common.h" />
+    <QtMoc Include="custom-slider.h" />
+    <QtMoc Include="named-btn.h" />
+    <QtMoc Include="record-save-tip.h" />
+    <QtMoc Include="login-dialog.h" />
+    <ClInclude Include="custom-event.h" />
+    <ClInclude Include="custom-stylesheet.h" />
+    <ClInclude Include="custom-config-ini.h" />
+    <QtMoc Include="im-widget.h" />
+    <QtMoc Include="customer-service-base-dialog.h" />
+    <QtMoc Include="font-set.h" />
+    <ClInclude Include="json-parser.h" />
+    <QtMoc Include="mask-label.h" />
+    <QtMoc Include="msg-item.h" />
+    <QtMoc Include="live_statics.h" />
+    <QtMoc Include="move-dialog.h" />
+    <QtMoc Include="left-right-button.h" />
+    <QtMoc Include="live-partner.h" />
+    <ClInclude Include="md5.h" />
+    <QtMoc Include="network\base-request.h" />
+    <QtMoc Include="network\download-request.h" />
+    <QtMoc Include="msgbox.h" />
+    <ClInclude Include="network\network-utility.h" />
+    <QtMoc Include="picture-dialog.h" />
+    <ClInclude Include="qtcustom-export.h" />
+    <ClInclude Include="resource.h" />
+    <QtMoc Include="translucent-widget.h" />
+    <QtMoc Include="signal-proxy_model.h" />
+    <QtMoc Include="source-widget.h" />
+    <QtMoc Include="set-dialog.h" />
+    <QtMoc Include="sacrouge-dialog.h" />
+    <QtMoc Include="source-base-dialog.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QtCustom.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resource.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="qtcustom_zh.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\build\libobs\libobs.vcxproj">
+      <Project>{a1818368-4013-3473-83d5-2c8ca1b27cb5}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,91 @@
+uniform float4x4 ViewProj;
+uniform texture2d image;
+uniform float strongly;
+uniform float gl_point12X;
+uniform float gl_point12Y;
+uniform float gl_point20X;
+uniform float gl_point20Y;
+uniform float gl_point16X;
+uniform float gl_point16Y;
+uniform float gl_point85X;
+uniform float gl_point85Y;
+uniform float gl_lefteyeX;
+uniform float gl_lefteyeY;
+uniform float gl_righteyeX;
+uniform float gl_righteyeY;
+uniform float gl_width;
+uniform float gl_height;
+sampler_state def_sampler {
+	Filter   = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+struct VertInOut {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+};
+VertInOut VSDefault(VertInOut vert_in)
+{
+	VertInOut vert_out;
+	vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+	vert_out.uv  = vert_in.uv;
+	return vert_out;
+}
+float2 curveWarp(float2 textureCoord, float2 originPosition, float2 targetPosition, float radius)
+{
+    float2 offset = float2(0.0,0.0);
+    float2 result = float2(0.0,0.0);
+    float2 direction = targetPosition - originPosition;
+    float infect = distance(textureCoord, originPosition)/radius;
+    infect = 1.0 - infect;
+    infect = clamp(infect, 0.0, 1.0);
+    offset = direction * infect;
+    result = textureCoord - offset;
+    return result;
+}
+float2 faceShave(float2 currentCoordinate, float faceLength,float strongly)
+{
+    float2 coordinate = currentCoordinate;
+    float2 currentPoint = float2(0.0,0.0);
+    float2 destPoint = float2(0.0,0.0);
+
+    float faceShaveScale = strongly * 0.12;
+    float radius = faceLength * 1.0;
+
+    float2 chinCenter = (float2(gl_point16X,gl_point16Y) + float2(gl_point85X,gl_point85Y)) * 0.5;
+    currentPoint = float2(gl_point12X,gl_point12Y);
+    destPoint = currentPoint + (chinCenter - currentPoint) * faceShaveScale;
+    coordinate = curveWarp(coordinate, currentPoint, destPoint, radius);
+
+    currentPoint = float2(gl_point20X,gl_point20Y);
+    destPoint = currentPoint + (chinCenter - currentPoint) * faceShaveScale;
+    coordinate = curveWarp(coordinate, currentPoint, destPoint, radius);
+
+    return coordinate;
+}
+float4 PSDrawBare(VertInOut vert_in) : TARGET
+{
+	
+    float2 coordinate = vert_in.uv * float2(gl_width,gl_height);
+
+    if(gl_lefteyeX == 0 || gl_lefteyeY==0 || gl_righteyeX ==0 || gl_righteyeY == 0){
+        float4 colora = image.Sample(def_sampler,vert_in.uv);
+	    return colora;
+    }else{
+        float eyeDistance = distance(float2(gl_lefteyeX,gl_lefteyeY), float2(gl_righteyeX,gl_righteyeY));
+
+        coordinate = faceShave(coordinate, eyeDistance,strongly);
+
+        coordinate = coordinate / float2(gl_width,gl_height);
+        float4 colora = image.Sample(def_sampler,coordinate);
+        return colora;
+    }
+}
+technique Draw
+{
+	pass
+	{
+		vertex_shader = VSDefault(vert_in);
+		pixel_shader  = PSDrawBare(vert_in);
+	}
+}

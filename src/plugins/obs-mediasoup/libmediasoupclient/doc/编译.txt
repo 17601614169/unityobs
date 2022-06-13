@@ -1,0 +1,153 @@
+
+POSIX or Windows based operating system
+cmake >= 3.5
+gcc and g++ >= 4.9 or clang (with C++11 support)
+
+
+Build libwebrtc
+rtc_include_tests=true 
+
+https://webrtc.github.io/webrtc-org/native-code/development/
+
+m84分支
+
+
+cmake . -Bbuild -DLIBWEBRTC_INCLUDE_PATH:PATH=/home/test/code/webrtc/src -DLIBWEBRTC_BINARY_PATH:PATH=/home/test/code/webrtc/src/out/my/obj
+
+cmake . -Bbuild-2 -DLIBWEBRTC_INCLUDE_PATH:PATH=/home/test/code/webrtc/src -DLIBWEBRTC_BINARY_PATH:PATH=/home/test/code/webrtc/src/out/my/obj
+
+
+
+make -C build-2
+sudo make install -C build-2
+
+: /usr/local/lib/libmediasoupclient.a
+-- Up-to-date: /usr/local/include/mediasoupclient/mediasoupclient.hpp
+
+
+
+
+cd /home/foo/src
+$ mkdir webrtc-checkout
+$ cd webrtc-checkout
+$ fetch --nohooks webrtc
+$ gclient sync
+$ cd src
+ git checkout -b m84 refs/remotes/branch-heads/4147
+$ gclient sync
+
+
+remotes/branch-heads/m79
+
+
+gn gen out/my --args='is_debug=false is_component_build=false is_clang=false rtc_include_tests=false rtc_use_h264=true use_rtti=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true'
+
+ninja -C out/my/
+
+ninja -C out/my/ -v
+
+
+use_custom_libcxx=false
+
+
+
+
+git clone https://github.com/versatica/mediasoup-broadcaster-demo.git
+
+cmake . -Bbuild                                              \
+  -DLIBWEBRTC_INCLUDE_PATH:PATH=${PATH_TO_LIBWEBRTC_SOURCES} \
+  -DLIBWEBRTC_BINARY_PATH:PATH=${PATH_TO_LIBWEBRTC_BINARY}   \
+  -DOPENSSL_INCLUDE_DIR:PATH=${PATH_TO_OPENSSL_HEADERS}      \
+  -DCMAKE_USE_OPENSSL=ON -DMEDIASOUPCLIENT_LOG_DEV=true -DMEDIASOUPCLIENT_LOG_TRACE=true
+
+cmake . -Bbuild -DLIBWEBRTC_INCLUDE_PATH:PATH="/home/yq/share/src/mediasoup/client/libwebrtc/src" -DLIBWEBRTC_BINARY_PATH:PATH="/home/yq/share/src/mediasoup/client/libwebrtc/src/out/mybuild-m79/obj" -DOPENSSL_INCLUDE_DIR:PATH="/usr/local/include" -DCMAKE_USE_OPENSSL=ON -DMEDIASOUPCLIENT_LOG_DEV=true -DMEDIASOUPCLIENT_LOG_TRACE=true
+
+ rm    build/CMakeCache.txt -rf
+
+cmake . -Bbuild                                                -DLIBWEBRTC_INCLUDE_PATH:PATH=${PATH_TO_LIBWEBRTC_SOURCES}   -DLIBWEBRTC_BINARY_PATH:PATH=${PATH_TO_LIBWEBRTC_BINARY}     -DOPENSSL_INCLUDE_DIR:PATH=${PATH_TO_OPENSSL_HEADERS}        -DCMAKE_USE_OPENSSL=ON 
+
+
+cmake . -Bbuild-2             -DLIBWEBRTC_INCLUDE_PATH:PATH=/home/test/code/webrtc/src   -DLIBWEBRTC_BINARY_PATH:PATH=/home/test/code/webrtc/src/out/my/obj     -DOPENSSL_INCLUDE_DIR:PATH=/usr/include        -DCMAKE_USE_OPENSSL=ON 
+
+
+cmake . -Bbuild-2     -DCMAKE_BUILD_TYPE=Debug         -DLIBWEBRTC_INCLUDE_PATH:PATH=/home/test/code/webrtc/src   -DLIBWEBRTC_BINARY_PATH:PATH=/home/test/code/webrtc/src/out/my/obj     -DOPENSSL_INCLUDE_DIR:PATH=/usr/include        -DCMAKE_USE_OPENSSL=ON  -DMEDIASOUPCLIENT_LOG_DEV=true -DMEDIASOUPCLIENT_LOG_TRACE=true
+
+cmake  -DCMAKE_BUILD_TYPE=Debug 
+
+
+
+make -C build-2
+
+
+  cpr 里边有个libcurl.so 需要依赖openssl 相关的库,  libwebrtc.a 也有同样的依赖,  所以在编译libcurl.so 时依赖的openssl 相关的库和头文件必须是 libwebrtc.a 所依赖的头文件和库;
+
+
+cp src/build/linux/debian_sid_amd64-sysroot/usr/include/x86_64-linux-gnu/openssl/* src/build/linux/debian_sid_amd64-sysroot/usr/include/openssl
+
+sudo cp ./src/build/linux/debian_sid_amd64-sysroot/usr/lib/x86_64-linux-gnu/libssl.a /usr/lib/x86_64-linux-gnu
+
+sudo cp ./src/build/linux/debian_sid_amd64-sysroot/usr/lib/x86_64-linux-gnu/libcrypto.a /usr/lib/x86_64-linux-gnu
+
+sudo rm /usr/include/openssl -r
+
+sudo cp ./src/build/linux/debian_sid_amd64-sysroot/usr/include/openssl /usr/include/openssl -r
+
+把x86_64 openssl 的配置头文件copy过去:
+
+sudo cp ./src/build/linux/debian_sid_amd64-sysroot/usr/include/x86_64-linux-gnu/openssl/* /usr/include/openssl/
+
+
+make -C build-2
+
+
+
+ libwebrtc_broadcaster.a
+libcurl.so
+libcpr.a
+
+libmediasoupclient/libsdptransform
+libsdptransform.a
+
+D:\work\code\client\libmediasoupclient\build-vs\Debug
+mediasoupclient.lib
+
+
+
+  需要把/usr/local/lib/libssl.a 替换为webrtc 目录下的libssl.a
+
+  所在目录:  src/build/linux/debian_sid_amd64-sysroot/usr/lib/x86_64-linux-gnu/libssl.a
+
+
+cat ./CMakeFiles/broadcaster.dir/link.txt
+/usr/bin/c++     CMakeFiles/broadcaster.dir/src/Broadcaster.cpp.o CMakeFiles/broadcaster.dir/src/main.cpp.o CMakeFiles/broadcaster.dir/src/MediaStreamTrackFactory.cpp.o  -o broadcaster  -Wl,-rpath,/home/test/code/client/mediasoup-broadcaster-demo/build/lib /home/test/code/webrtc/src/out/Default/obj/libwebrtc.a lib/libcpr.a libmediasoupclient/libmediasoupclient.a libwebrtc/libwebrtc_broadcaster.a lib/libcurl.so -llber -lldap -ldl -lpthread /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/x86_64-linux-gnu/libz.so /home/test/code/webrtc/src/out/Default/obj/libwebrtc.a libmediasoupclient/libsdptransform/libsdptransform.a 
+
+
+
+/usr/bin/c++     CMakeFiles/broadcaster.dir/src/Broadcaster.cpp.o CMakeFiles/broadcaster.dir/src/main.cpp.o CMakeFiles/broadcaster.dir/src/MediaStreamTrackFactory.cpp.o  -o broadcaster  -Wl,-rpath,/home/test/code/client/mediasoup-broadcaster-demo/build/lib -Wl,--start-group  lib/libcpr.a libmediasoupclient/libmediasoupclient.a libwebrtc/libwebrtc_broadcaster.a lib/libcurl.so -llber -lldap -ldl -lpthread /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/x86_64-linux-gnu/libz.so /home/test/code/webrtc/src/out/Default/obj/libwebrtc.a libmediasoupclient/libsdptransform/libsdptransform.a -Wl,--end-group 
+
+
+
+
+SERVER_URL=https://my.mediasoup-demo.org:4443 ROOM_ID=broadcaster build/broadcaster
+
+
+
+
+
+
+
+gn gen out/my --args='is_debug=false is_component_build=false is_clang=false rtc_include_tests=false rtc_use_h264=true use_rtti=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true'
+
+gn gen out/my --args='is_debug=false is_component_build=false is_clang=false rtc_include_tests=false rtc_use_h264=true use_rtti=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true logging_buildflags=true'
+
+
+ninja -C out/my/
+
+
+
+
+
+
+
+
+

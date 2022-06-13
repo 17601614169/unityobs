@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="bottom-ctrls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="left-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="custom-slider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="named-btn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtCustom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="record-save-tip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="top-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="translucent-widget.h.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="signal-proxy_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="string-convert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user-info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="login-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="json-parser.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="custom-config-ini.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="characters-convert.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="asyn-request.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="set-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mask-label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="im-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="msg-item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="live_statics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sacrouge-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="callback-request.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="move-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="left-right-button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source-base-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="md5.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="network\base-request.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\download-request.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\network-utility.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="url-label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qtcustom-export.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="base-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="url-tab-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tab-item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="customer-service-base-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="alter-password.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common-function.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="msgbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="font-set.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base-web-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="webengine-widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="live-partner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="picture-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="custom-stylesheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json-parser.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="custom-config-ini.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="characters-convert.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="md5.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="network\network-utility.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="qtcustom-export.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="custom-event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common-function.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="bottom-ctrls.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="custom-slider.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="left-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="named-btn.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtCustom.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="record-save-tip.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="top-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="translucent-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="signal-proxy_model.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="source-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="string-convert.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="login-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="user-info.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="asyn-request.h">
+      <Filter>network</Filter>
+    </QtMoc>
+    <QtMoc Include="set-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="mask-label.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="im-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="msg-item.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="live_statics.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sacrouge-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="callback-request.h">
+      <Filter>network</Filter>
+    </QtMoc>
+    <QtMoc Include="move-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="left-right-button.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="source-base-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="network\base-request.h">
+      <Filter>network</Filter>
+    </QtMoc>
+    <QtMoc Include="network\download-request.h">
+      <Filter>network</Filter>
+    </QtMoc>
+    <QtMoc Include="url-label.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="base-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="url-tab-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="tab-item.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="customer-service-base-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="alter-password.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="msgbox.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="font-set.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="base-web-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="webengine-widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="live-partner.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="picture-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="qtcustom_zh.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{7951b360-3b73-4cae-afdd-ed6f5b129e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{fbb3a596-cb69-456a-81f8-1ddfac9f3dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{9db29f88-27c6-4a8c-be15-f1d3050561ad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="qtcustom_global.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resource.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QtCustom.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
