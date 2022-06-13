@@ -1,10 +1,8 @@
 * text=auto
-
 *.sln             text eol=crlf
 *.vcproj          text eol=crlf
 *.vcxproj         text eol=crlf
 *.vcxproj         text eol=crlf
 *.vcxproj.filters text eol=crlf
-
 cmake/ALL_BUILD.vcxproj.user.in text eol=crlf
-
+data/obs32_Data/resources.assets.resS filter=lfs diff=lfs merge=lfs -text
